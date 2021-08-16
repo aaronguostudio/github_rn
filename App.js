@@ -1,4 +1,6 @@
 import React from 'react';
+import {useSelector} from 'react-redux';
+import {Provider} from 'react-redux';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -9,6 +11,7 @@ import PopularPage from './js/page/PopularPage';
 import TrendingPage from './js/page/TrendingPage';
 import MyPage from './js/page/MyPage';
 import {ROUTES} from './config/constants';
+import store from './js/store';
 
 const WelcomeStack = createNativeStackNavigator();
 
@@ -32,6 +35,7 @@ const WelcomeStackScreen = () => {
 const HomeTab = createBottomTabNavigator();
 
 const HomeTabScreen = () => {
+  const theme = useSelector(state => state.theme.theme);
   return (
     <HomeTab.Navigator
       screenOptions={({route}) => ({
@@ -48,7 +52,7 @@ const HomeTabScreen = () => {
           }
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: 'tomato',
+        tabBarActiveTintColor: theme,
         tabBarInactiveTintColor: 'gray',
       })}>
       <HomeTab.Screen name={ROUTES.popular} component={PopularPage} />
@@ -61,9 +65,11 @@ const HomeTabScreen = () => {
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <WelcomeStackScreen />
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <WelcomeStackScreen />
+      </NavigationContainer>
+    </Provider>
   );
 };
 
