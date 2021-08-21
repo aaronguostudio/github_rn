@@ -1,7 +1,8 @@
 import {onThemeChange} from './theme';
-
-console.log('>>>>>???????', onThemeChange);
+import {onLoadPopularData, onLoadMorePopular} from './popular';
 
 export default {
   onThemeChange,
+  onLoadPopularData,
+  onLoadMorePopular,
 };

@@ -1,6 +1,5 @@
 import React from 'react';
-import {useSelector} from 'react-redux';
-import {Provider} from 'react-redux';
+import {useSelector, Provider} from 'react-redux';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -36,22 +35,26 @@ const HomeTab = createBottomTabNavigator();
 
 const HomeTabScreen = () => {
   const theme = useSelector(state => state.theme.theme);
+
+  const getTabBarIcon = ({focused, color, size}, route) => {
+    let iconName;
+    if (route.name === ROUTES.popular) {
+      iconName = focused ? 'flame' : 'flame-outline';
+    } else if (route.name === ROUTES.trending) {
+      iconName = focused ? 'bar-chart' : 'bar-chart-outline';
+    } else if (route.name === ROUTES.favorite) {
+      iconName = focused ? 'star' : 'star-outline';
+    } else if (route.name === ROUTES.my) {
+      iconName = focused ? 'person-circle' : 'person-circle-outline';
+    }
+    return <Ionicons name={iconName} size={size} color={color} />;
+  };
+
   return (
     <HomeTab.Navigator
       screenOptions={({route}) => ({
-        tabBarIcon: ({focused, color, size}) => {
-          let iconName;
-          if (route.name === ROUTES.popular) {
-            iconName = focused ? 'flame' : 'flame-outline';
-          } else if (route.name === ROUTES.trending) {
-            iconName = focused ? 'bar-chart' : 'bar-chart-outline';
-          } else if (route.name === ROUTES.favorite) {
-            iconName = focused ? 'star' : 'star-outline';
-          } else if (route.name === ROUTES.my) {
-            iconName = focused ? 'person-circle' : 'person-circle-outline';
-          }
-          return <Ionicons name={iconName} size={size} color={color} />;
-        },
+        tabBarIcon: ({focused, color, size}) =>
+          getTabBarIcon({focused, color, size}, route),
         tabBarActiveTintColor: theme,
         tabBarInactiveTintColor: 'gray',
       })}>
