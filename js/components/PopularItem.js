@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {useSelector} from 'react-redux';
 import {Text, Image, TouchableOpacity, StyleSheet, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {STYLES} from '../../config/constants';
+import {STYLES} from '../config/constants';
+import {THEMES} from '../config/themes';
 import {
   rowBetweenCenter,
   sizes,
@@ -12,6 +14,8 @@ import {
 } from '../styles/app';
 
 const PopularItem = ({item, onSelect}) => {
+  const theme = useSelector(state => state.theme.theme);
+
   if (!item || !item.owner) {
     return null;
   }
@@ -32,7 +36,11 @@ const PopularItem = ({item, onSelect}) => {
             </Text>
           </View>
           <TouchableOpacity style={rowBetweenCenter}>
-            <Ionicons name={'star-outline'} size={sizes.lg} color={'tomato'} />
+            <Ionicons
+              name={'star-outline'}
+              size={sizes.lg}
+              color={THEMES[theme].primary}
+            />
             <Text style={getMargins(STYLES.margins.ml, STYLES.sizes.sx)}>
               {item.stargazers_count}
             </Text>
@@ -43,8 +51,8 @@ const PopularItem = ({item, onSelect}) => {
   );
 };
 
-PopularItem.PropTypes = {
-  item: PropTypes.shape.isRequired,
+PopularItem.propTypes = {
+  item: PropTypes.shape().isRequired,
   onSelect: PropTypes.func.isRequired,
 };
 

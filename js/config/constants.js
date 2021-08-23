@@ -1,3 +1,11 @@
+const GITHUB_API = 'https://api.github.com';
+const GITHUB_SITE = 'https://github.com';
+
+export const DATA_STORE_TYPES = {
+  popular: 'popular',
+  trending: 'trending',
+};
+
 export const ROUTES = {
   popular: 'Popular',
   trending: 'Trending',
@@ -8,12 +16,22 @@ export const ROUTES = {
 export const POPULAR_TABS = [
   'All',
   'NodeJS',
-  'Java',
+  'C#',
   'Android',
   'iOS',
   'React',
   'React Native',
   'PHP',
+];
+
+export const TRENDING_TABS = [
+  'All',
+  'NodeJS',
+  'C#',
+  'Android',
+  'iOS',
+  'React',
+  'React Native',
 ];
 
 export const THEME = {
@@ -23,8 +41,11 @@ export const THEME = {
 };
 
 export const GITHUB = {
-  repos: 'https://api.github.com/search/repositories?q=',
+  base: 'https://api.github.com',
+  repos: `${GITHUB_API}/search/repositories?q=`,
   queryStr: '&sort=stars',
+  trending: `${GITHUB_SITE}/trending`,
+  trendingQuery: '?since=daily',
 };
 
 export const STYLES = {

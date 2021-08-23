@@ -7,12 +7,10 @@ const logger = store => next => action => {
   if (typeof action === 'function') {
     console.log('dispatch a function');
   } else {
-    console.log('dispatch an action', action);
+    console.log('dispatch an action');
   }
 
   const res = next(action);
-  console.log('>>> res', res);
-  console.log('>>> nextState', store.getState());
   return res;
 };
 

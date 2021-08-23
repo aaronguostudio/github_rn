@@ -6,19 +6,22 @@ import {
   FlatList,
   RefreshControl,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
+import Toast from 'react-native-easy-toast';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {POPULAR_TABS, GITHUB, STYLES} from '../../config/constants';
+import {POPULAR_TABS, GITHUB, STYLES} from '../config/constants';
 import actions from '../store/action';
 import PopularItem from '../components/PopularItem';
-import Toast from 'react-native-easy-toast';
-import {layout, getMargins} from '../styles/app';
+import NavigationBar from '../components/NavigationBar';
+import {layout, getMargins, sizes} from '../styles/app';
+import {THEMES} from '../config/themes';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Tab = createMaterialTopTabNavigator();
 const DEFAULT_PAGE_SIZE = 10;
 
 const PopularTab = ({route}) => {
-  console.log('>>>>>> route', route.name);
   const storeName = route.name;
   const theme = useSelector(state => state.theme.theme);
   const popular = useSelector(state => state.popular[storeName]) || {
@@ -50,7 +53,7 @@ const PopularTab = ({route}) => {
       <View style={layout.rowCenterCenter}>
         <ActivityIndicator
           style={{
-            color: theme,
+            color: THEMES[theme].primary,
             ...getMargins(STYLES.margins.ma, STYLES.sizes.lg),
           }}
         />
@@ -67,8 +70,8 @@ const PopularTab = ({route}) => {
         refreshControl={
           <RefreshControl
             title="Loading"
-            titleColor={theme}
-            colors={[theme]}
+            titleColor={THEMES[theme].primary}
+            colors={[THEMES[theme].primary]}
             refreshing={popular.isLoading}
             onRefresh={() => {
               dispatch(
@@ -108,19 +111,46 @@ const PopularTab = ({route}) => {
 
 export default ({route}) => {
   const theme = useSelector(state => state.theme.theme);
+
+  const getRightButton = () => {
+    return (
+      <TouchableOpacity>
+        <Ionicons name={'star-outline'} size={sizes.xl} color={'white'} />
+      </TouchableOpacity>
+    );
+  };
+
+  const getLeftButton = callback => {
+    return (
+      <TouchableOpacity onPress={callback}>
+        <View>
+          <Ionicons name={'star-outline'} size={sizes.xl} color={'white'} />
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
   return (
-    <Tab.Navigator
-      initialRouteName={POPULAR_TABS[0]}
-      screenOptions={{
-        tabBarIndicatorStyle: {backgroundColor: theme},
-        tabBarItemStyle: {width: 'auto'},
-        tabBarScrollEnabled: true,
-        tabBarLabelStyle: {textTransform: 'none'},
-      }}>
-      {POPULAR_TABS.map(tab => (
-        <Tab.Screen name={tab} component={PopularTab} key={tab} />
-      ))}
-    </Tab.Navigator>
+    <View style={{flex: 1}}>
+      <NavigationBar
+        title={'Popular'}
+        leftButton={getLeftButton()}
+        rightButton={getRightButton()}
+      />
+      <Tab.Navigator
+        initialRouteName={POPULAR_TABS[0]}
+        screenOptions={{
+          tabBarIndicatorStyle: {backgroundColor: THEMES[theme].primary},
+          tabBarItemStyle: {width: 'auto'},
+          tabBarScrollEnabled: true,
+          tabBarLabelStyle: {textTransform: 'none'},
+          tabBarStyle: {backgroundColor: 'white'},
+        }}>
+        {POPULAR_TABS.map(tab => (
+          <Tab.Screen name={tab} component={PopularTab} key={tab} />
+        ))}
+      </Tab.Navigator>
+    </View>
   );
 };
 
@@ -129,5 +159,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: sizes.sm,
   },
 });

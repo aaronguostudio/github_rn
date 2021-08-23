@@ -1,4 +1,4 @@
-import {STYLES} from '../../config/constants';
+import {STYLES} from '../config/constants';
 
 export const rowBetweenCenter = {
   flexDirection: 'row',

@@ -1,8 +1,8 @@
 import types from '../../action/types';
-import {THEME} from '../../../../config/constants';
+import {THEME_NAMES} from '../../../config/themes';
 
 const defaultState = {
-  theme: THEME.blue,
+  theme: THEME_NAMES.blueLight,
 };
 
 export default function onAction(state = defaultState, action) {

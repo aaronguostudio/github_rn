@@ -1,5 +1,6 @@
 import React from 'react';
 import {useSelector, Provider} from 'react-redux';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -9,7 +10,8 @@ import FavoritePage from './js/page/FavoritePage';
 import PopularPage from './js/page/PopularPage';
 import TrendingPage from './js/page/TrendingPage';
 import MyPage from './js/page/MyPage';
-import {ROUTES} from './config/constants';
+import {ROUTES} from './js/config/constants';
+import {THEMES} from './js/config/themes';
 import store from './js/store';
 
 const WelcomeStack = createNativeStackNavigator();
@@ -53,9 +55,10 @@ const HomeTabScreen = () => {
   return (
     <HomeTab.Navigator
       screenOptions={({route}) => ({
+        tabBarStyle: {backgroundColor: 'white'},
         tabBarIcon: ({focused, color, size}) =>
           getTabBarIcon({focused, color, size}, route),
-        tabBarActiveTintColor: theme,
+        tabBarActiveTintColor: THEMES[theme].primary,
         tabBarInactiveTintColor: 'gray',
       })}>
       <HomeTab.Screen name={ROUTES.popular} component={PopularPage} />
@@ -69,9 +72,11 @@ const HomeTabScreen = () => {
 const App = () => {
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <WelcomeStackScreen />
-      </NavigationContainer>
+      <SafeAreaProvider>
+        <NavigationContainer theme={THEMES.blueLight}>
+          <WelcomeStackScreen />
+        </NavigationContainer>
+      </SafeAreaProvider>
     </Provider>
   );
 };
