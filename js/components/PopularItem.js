@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
 import {Text, Image, TouchableOpacity, StyleSheet, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import HTMLView from 'react-native-htmlview';
 import {STYLES} from '../config/constants';
 import {THEMES} from '../config/themes';
 import {
@@ -24,14 +25,21 @@ const PopularItem = ({item, onSelect}) => {
     <TouchableOpacity onPress={onSelect}>
       <View style={styles.container}>
         <Text style={styles.title}>{item.full_name}</Text>
-        <Text style={styles.description}>{item.description}</Text>
-        <View style={rowBetweenCenter}>
+        <HTMLView
+          value={`<p>${item.description}</p>`}
+          stylesheet={{p: styles.description}}
+        />
+        <View
+          style={{
+            ...rowBetweenCenter,
+            ...getMargins(STYLES.margins.mt, STYLES.sizes.md),
+          }}>
           <View style={rowBetweenCenter}>
             <Image
               style={getSquare(4, {round: true})}
               source={{uri: item.owner.avatar_url}}
             />
-            <Text style={getMargins(STYLES.margins.ml, STYLES.sizes.sx)}>
+            <Text style={getMargins(STYLES.margins.ml, STYLES.sizes.md)}>
               Author
             </Text>
           </View>
@@ -41,7 +49,7 @@ const PopularItem = ({item, onSelect}) => {
               size={sizes.lg}
               color={THEMES[theme].primary}
             />
-            <Text style={getMargins(STYLES.margins.ml, STYLES.sizes.sx)}>
+            <Text style={getMargins(STYLES.margins.ml, STYLES.sizes.md)}>
               {item.stargazers_count}
             </Text>
           </TouchableOpacity>
@@ -73,6 +81,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: fontSizes.lg,
+    fontWeight: STYLES.weights.lg,
     marginBottom: sizes.sm,
     color: '#212121',
   },

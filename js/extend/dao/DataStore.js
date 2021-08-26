@@ -35,7 +35,6 @@ export default class DataStore {
   }
 
   fetchLocalData(url) {
-    console.log('&&&&&&&&&&&&', url);
     return new Promise((resolve, reject) => {
       AsyncStorage.getItem(url, (error, result) => {
         if (!error) {
@@ -54,7 +53,6 @@ export default class DataStore {
   }
 
   fetchRemoteDate(url, storeType = DATA_STORE_TYPES.popular) {
-    console.log('$$$$$$$$$$$$$$ url', url);
     return new Promise((resolve, reject) => {
       if (storeType === DATA_STORE_TYPES.popular) {
         fetch(url)

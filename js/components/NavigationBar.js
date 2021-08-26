@@ -8,6 +8,8 @@ import {
   StyleSheet,
   Platform,
 } from 'react-native';
+import DeviceInfo from 'react-native-device-info';
+import {sizes} from '../styles/app';
 
 const NavigationBar = ({
   style,
@@ -36,7 +38,12 @@ const NavigationBar = ({
   const content = hide ? null : (
     <View style={styles.navBar}>
       <View style={styles.navBarBtn}>{leftButton}</View>
-      <View style={[styles.navBarTitleContainer, titleLayoutStyle]}>
+      <View
+        style={[
+          styles.navBarTitleContainer,
+          titleLayoutStyle,
+          title.length > 20 ? {paddingRight: 40} : null,
+        ]}>
         {titleComponent}
       </View>
       <View style={styles.navBarBtn}>{rightButton}</View>
@@ -84,8 +91,9 @@ const styles = StyleSheet.create({
     height: Platform.OS === 'ios' ? 44 : 50,
   },
   navBarBtn: {
-    width: 30,
-    height: 30,
+    width: 20,
+    height: 20,
+    margin: sizes.md,
     alignItems: 'center',
   },
   navBarTitleContainer: {
@@ -103,7 +111,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   statusBar: {
-    height: Platform.OS === 'ios' ? 0 : 20,
+    height: DeviceInfo.hasNotch() ? 40 : 0,
   },
 });
 

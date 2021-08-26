@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import Toast from 'react-native-easy-toast';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {POPULAR_TABS, GITHUB, STYLES} from '../config/constants';
+import {POPULAR_TABS, GITHUB, STYLES, ROUTES} from '../config/constants';
 import actions from '../store/action';
 import PopularItem from '../components/PopularItem';
 import NavigationBar from '../components/NavigationBar';
@@ -21,7 +21,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 const Tab = createMaterialTopTabNavigator();
 const DEFAULT_PAGE_SIZE = 10;
 
-const PopularTab = ({route}) => {
+const PopularTab = ({route, navigation}) => {
   const storeName = route.name;
   const theme = useSelector(state => state.theme.theme);
   const popular = useSelector(state => state.popular[storeName]) || {
@@ -41,7 +41,16 @@ const PopularTab = ({route}) => {
 
   const renderItem = data => {
     const item = data.item;
-    return <PopularItem item={item} onSelect={() => {}} />;
+    return (
+      <PopularItem
+        item={item}
+        onSelect={() => {
+          navigation.navigate(ROUTES.details, {
+            projectModel: data.item,
+          });
+        }}
+      />
+    );
   };
 
   const getFooter = () => {
@@ -124,7 +133,11 @@ export default ({route}) => {
     return (
       <TouchableOpacity onPress={callback}>
         <View>
-          <Ionicons name={'star-outline'} size={sizes.xl} color={'white'} />
+          <Ionicons
+            name={'chevron-back-outline'}
+            size={sizes.xl}
+            color={'white'}
+          />
         </View>
       </TouchableOpacity>
     );

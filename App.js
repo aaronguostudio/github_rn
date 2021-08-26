@@ -9,6 +9,7 @@ import WelcomePage from './js/page/WelcomePage';
 import FavoritePage from './js/page/FavoritePage';
 import PopularPage from './js/page/PopularPage';
 import TrendingPage from './js/page/TrendingPage';
+import DetailPage from './js/page/DetailPage';
 import MyPage from './js/page/MyPage';
 import {ROUTES} from './js/config/constants';
 import {THEMES} from './js/config/themes';
@@ -35,6 +36,24 @@ const WelcomeStackScreen = () => {
 
 const HomeTab = createBottomTabNavigator();
 
+const PopularStack = createNativeStackNavigator();
+const PopularStackScreen = () => {
+  return (
+    <PopularStack.Navigator initialRouteName={ROUTES.popularIndex}>
+      <PopularStack.Screen
+        name={ROUTES.popularIndex}
+        component={PopularPage}
+        options={{header: () => null}}
+      />
+      <PopularStack.Screen
+        name={ROUTES.details}
+        component={DetailPage}
+        options={{header: () => null}}
+      />
+    </PopularStack.Navigator>
+  );
+};
+
 const HomeTabScreen = () => {
   const theme = useSelector(state => state.theme.theme);
 
@@ -60,9 +79,10 @@ const HomeTabScreen = () => {
           getTabBarIcon({focused, color, size}, route),
         tabBarActiveTintColor: THEMES[theme].primary,
         tabBarInactiveTintColor: 'gray',
+        headerShown: false,
       })}>
-      <HomeTab.Screen name={ROUTES.popular} component={PopularPage} />
-      <HomeTab.Screen name={ROUTES.trending} component={TrendingPage} />
+      <HomeTab.Screen name={ROUTES.popular} component={PopularStackScreen} />
+      {/* <HomeTab.Screen name={ROUTES.trending} component={TrendingPage} /> */}
       <HomeTab.Screen name={ROUTES.favorite} component={FavoritePage} />
       <HomeTab.Screen name={ROUTES.my} component={MyPage} />
     </HomeTab.Navigator>
