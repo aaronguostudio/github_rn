@@ -15,6 +15,53 @@ export const ROUTES = {
   my: 'My',
 };
 
+export const MY_MENUS = {
+  customLanguage: {
+    name: 'CustomLanguage',
+    icon: 'star-outline',
+  },
+  sortLanguage: {
+    name: 'sortLanguage',
+    icon: 'star-outline',
+  },
+  customTheme: {
+    name: 'customTheme',
+    icon: 'star-outline',
+  },
+  customTag: {
+    name: 'customTag',
+    icon: 'star-outline',
+  },
+  sortTag: {
+    name: 'sortTag',
+    icon: 'star-outline',
+  },
+  removeTag: {
+    name: 'removeTag',
+    icon: 'star-outline',
+  },
+  aboutAuthor: {
+    name: 'aboutAuthor',
+    icon: 'star-outline',
+  },
+  about: {
+    name: 'about',
+    icon: 'star-outline',
+  },
+  tutorial: {
+    name: 'tutorial',
+    icon: 'star-outline',
+  },
+  feedback: {
+    name: 'feedback',
+    icon: 'star-outline',
+  },
+  share: {
+    name: 'share',
+    icon: 'star-outline',
+  },
+};
+
 export const POPULAR_TABS = [
   'All',
   'NodeJS',

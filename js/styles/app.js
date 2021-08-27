@@ -47,6 +47,12 @@ export const margins = {
   mlxxl: sizes.xxl,
 };
 
+export const separater = {
+  height: 0.5,
+  opacity: 0.5,
+  backgroundColor: 'darkgray',
+};
+
 export const getSquare = (base = 1, {round = false} = {}) => {
   const res = {
     height: sizes.sm * base,

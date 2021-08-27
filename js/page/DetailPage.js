@@ -58,7 +58,7 @@ export default ({route, navigation}) => {
       webViewRef.current.goBack();
     } else {
       // go back
-      // navigation.go();
+      navigation.goBack();
     }
   };
 
